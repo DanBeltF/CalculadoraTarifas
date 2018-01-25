@@ -41,6 +41,10 @@ public class CalculadoraTarifas {
      * @param edad - edad del pasajero
      * @return la tarifa ajustada
      * @throws ExcepcionParametrosInvalidos [XXXXXXXXXXXXXXXXXXXXXXXXXXX]
+     * 
+     * 
+     * @author Daniel Beltran
+     * @author Julian Arias
  *
      */
     public float calculoTarifa(float tarifaBase, DateTime fechaActual, DateTime fechaVuelo, int edad)  {
@@ -48,13 +52,13 @@ public class CalculadoraTarifas {
         float descuentoAntelacion = 0.0f;
         float descuentoEdad = 0.0f;
 
-        if (Days.daysBetween(fechaActual, fechaVuelo).getDays() > 20) {
+        if (Days.daysBetween(fechaVuelo, fechaActual).getDays() > 20) {
             descuentoAntelacion = 0.15f;
         }
         if (edad < 18) {
             descuentoEdad = 0.05f;
-        } else if (edad > 64){
-            descuentoEdad = 0.06f;
+        } else if (edad > 65){
+            descuentoEdad = 0.08f;
         }
 
         return tarifaBase * (1f - descuentoAntelacion) * (1f - descuentoEdad);

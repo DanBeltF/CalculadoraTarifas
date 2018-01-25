@@ -39,15 +39,69 @@ public class CalculatorTest {
         now = new DateTime();
         tarifa = 1000f;
     }
-
-
+    
+    /**
+     * Pruebas clase de equivalencia 1: FAILURE
+    */
     @Test
     public void testClaseEquivalenciaUno() {
         CalculadoraTarifas ct=new CalculadoraTarifas();
 
+        qt().forAll(range(18,65).describedAs(e -> "Edad = " + e)
+                   ,range(21,365).describedAs(d -> "DiasAntelacion = " + d))
+            .check((edad,days) -> ct.calculoTarifa(tarifa,now, now.minusDays(days),edad) == tarifa * (1 - 0.15f));
+    }
+    
+    /**
+     * Pruebas clase de equivalencia 2: FAILURE
+    */
+    @Test
+    public void testClaseEquivalenciaDos() {
+        CalculadoraTarifas ct=new CalculadoraTarifas();
+
+        qt().forAll(range(18,65).describedAs(e -> "Edad = " + e)
+                   ,range(0,20).describedAs(d -> "DiasAntelacion = " + d))
+            .check((edad,days) -> ct.calculoTarifa(tarifa,now, now.minusDays(days),edad) == tarifa);
+    }
+    
+    /**
+     * Pruebas clase de equivalencia 3: PASS (esta es la prueba inicial)
+    */
+    @Test
+    public void testClaseEquivalenciaTres() {
+        CalculadoraTarifas ct=new CalculadoraTarifas();
+
         qt().forAll(range(0,17).describedAs(e -> "Edad = " + e)
                    ,range(0,20).describedAs(d -> "DiasAntelacion = " + d))
-            .check((edad,days) -> ct.calculoTarifa(tarifa,now, now.minus(days),edad) == tarifa * (1 - 0.05));
+            .check((edad,days) -> ct.calculoTarifa(tarifa,now, now.minusDays(days),edad) == tarifa * (1 - 0.05));
     }
+    
+   
+    
+ 
+    /**
+     * Pruebas clase de equivalencia 4: FAILURE
+    */
+    @Test
+    public void testClaseEquivalenciaCuatro() {
+        CalculadoraTarifas ct=new CalculadoraTarifas();
 
+        qt().forAll(range(0,17).describedAs(e -> "Edad = " + e)
+                   ,range(21,365).describedAs(d -> "DiasAntelacion = " + d))
+            .check((edad,days) -> ct.calculoTarifa(tarifa,now, now.minusDays(days),edad) == tarifa * (1 - 0.2));
+    }
+    
+    /**
+     * Pruebas clase de equivalencia 5: FAILURE
+    */
+    @Test
+    public void testClaseEquivalenciaCinco() {
+        CalculadoraTarifas ct=new CalculadoraTarifas();
+
+        qt().forAll(range(66,125).describedAs(e -> "Edad = " + e)
+                   ,range(21,365).describedAs(d -> "DiasAntelacion = " + d))
+            .check((edad,days) -> ct.calculoTarifa(tarifa,now, now.minusDays(days),edad) == tarifa * (1 - 0.23));
+    }
+    
+    
 }
