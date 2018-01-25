@@ -100,7 +100,7 @@ public class CalculatorTest {
 
         qt().forAll(range(66,125).describedAs(e -> "Edad = " + e)
                    ,range(21,365).describedAs(d -> "DiasAntelacion = " + d))
-            .check((edad,days) -> ct.calculoTarifa(tarifa,now, now.minusDays(days),edad) == tarifa * (1 - 0.23));
+            .check((edad,days) -> ct.calculoTarifa(tarifa,now, now.minusDays(days),edad) == tarifa * (1f - 0.23f));
     }
     
     
